@@ -16,14 +16,16 @@ def save_l_image(npdata, outfilename):
 
 
 def save_image(npdata, outfilename):
-    img = Image.fromarray(npdata)
+    img = Image.fromarray(npdata.astype(np.uint8))
     img.save(outfilename)
 
 
 filename = input("Введите путь к файлу: ")
 arr = load_image(filename)
 l_image = input("Введите путь, по которому сохранится полутоновое изображение: ")
-save_l_image(arr, l_image)
+b = np.array([0.299, 0.587, 0.114])
+arr = (arr*b)
+save_image(np.sum(arr, axis=2), l_image)
 # Преобразование в Lena_thresholded.png
 arr = load_image(l_image)
 arr[arr < 50] = 0
