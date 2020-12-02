@@ -1,6 +1,6 @@
 from PIL import Image
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 def load_image(infilename):
     img = Image.open(infilename)
@@ -32,5 +32,11 @@ arr[arr < 50] = 0
 img = Image.fromarray(arr)
 print("Полученная гистограмма яркости изображения")
 print(img.histogram())
+plt.title("Гистограмма распределения яркости")
+ax = plt.subplot()
+ax.set_xlabel("Количество")
+ax.set_ylabel("Значение яркости пикселя")
+plt.hist(img.histogram(), bins=15, color="green")
+plt.show()
 t_image = input("Введите путь, по которому сохранится пороговое изображение: ")
 save_image(arr, t_image)
